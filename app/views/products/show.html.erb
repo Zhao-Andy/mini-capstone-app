@@ -1,0 +1,10 @@
+<h1>The Product!</h1>
+
+<h2><%= @product.name %></h2>
+  <h2><%= @product.price %></h2>
+  <h2><img src="<%= @product.image %>"></h2>
+  <h2><%= @product.desc %></h2>
+
+<p><%= link_to "Edit your product", "/products/#{@product.id}/edit" %></p>
+<p><a href="/products">Back to all products</a></p>
+<p></p><%= link_to "Delete", "/products/#{@product.id}", method: :delete %></p>

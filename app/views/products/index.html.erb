@@ -1,7 +1,7 @@
 <h1>Our Products today:</h1>
 <% @products.each do |product| %>
-  <li><%= product.name %></li>
+  <li><%= link_to product.name, "/products/#{product.id}" %></li>
   <li><%= product.price %></li>
-  <img src=<%= product.image %></img>
+  <img src="<%= product.image %>"</img>
   <li><%= product.desc %></li>
-  <% end %>
+<% end %>
