@@ -1,7 +1,13 @@
 <h1>Our Products today:</h1>
-<% @products.each do |product| %>
-  <li><%= link_to product.name, "/products/#{product.id}" %></li>
-  <li><%= product.price %></li>
-  <img src="<%= product.image %>"</img>
-  <li><%= product.desc %></li>
-<% end %>
+<div class="container">
+  <div class="row products-index">
+    <% @products.each do |product| %>
+    <div class="col-md-4 thumbnail">
+      <%= link_to product.name, "/products/#{product.id}" %>
+      <%= product.price %>
+      <img src="<%= product.image %>">
+      <%= product.desc %>
+    </div>
+    <% end %>
+  </div>
+</div>

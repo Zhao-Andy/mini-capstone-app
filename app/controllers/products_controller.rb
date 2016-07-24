@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
       desc: params[:desc]
     )
     @product.save
-    flash[:created] = "#{@product.name} was successfully created!"
+    flash[:success] = "#{@product.name} was successfully created!"
     redirect_to "/products/#{@product.id}"
   end
 
@@ -37,14 +37,14 @@ class ProductsController < ApplicationController
       image: params[:image],
       desc: params[:desc]
     )
-    flash[:updated] = "#{@product.name} was successfully updated!"
+    flash[:success] = "#{@product.name} was successfully updated!"
     redirect_to "/products/#{@product.id}"
   end
 
   def destroy
     @product = Product.find_by(id: params[:id])
     @product.destroy
-    flash[:deleted] = "#{@product.name} was successfully deleted!"
+    flash[:success] = "#{@product.name} was successfully deleted!"
     redirect_to "/products"
   end
 end
