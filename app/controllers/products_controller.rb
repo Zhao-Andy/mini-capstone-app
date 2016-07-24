@@ -5,13 +5,15 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @create = Product.new(
+    @product = Product.new(
       name: params[:name],
       price: params[:price],
       image: params[:image],
       desc: params[:desc]
     )
-    @create.save
+    @product.save
+    flash[:created] = "#{@product.name} was successfully created!"
+    redirect_to "/products/#{@product.id}"
   end
 
   def new
@@ -30,17 +32,19 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find_by(id: params[:id])
     @product.update(
-    name: params[:name],
-    price: params[:price],
-    image: params[:image],
-    desc: params[:desc]
+      name: params[:name],
+      price: params[:price],
+      image: params[:image],
+      desc: params[:desc]
     )
-    render 'update.html.erb'
+    flash[:updated] = "#{@product.name} was successfully updated!"
+    redirect_to "/products/#{@product.id}"
   end
 
   def destroy
     @product = Product.find_by(id: params[:id])
     @product.destroy
-    render "destroy.html.erb"
+    flash[:deleted] = "#{@product.name} was successfully deleted!"
+    redirect_to "/products"
   end
 end
