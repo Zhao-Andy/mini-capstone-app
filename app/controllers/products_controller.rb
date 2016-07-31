@@ -1,7 +1,11 @@
 class ProductsController < ApplicationController
   def index
     @products = Product.all
-    render 'index.html.erb'
+    if params[:sort] && params[:sort_order]
+      @products = Product.order(params[:sort] => params[:sort_order])
+    elsif params[:discount]
+      @products = Product.where("price < ?", 2.00)
+    end
   end
 
   def create
@@ -20,7 +24,11 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find_by(id: params[:id])
+    if params[:id] == "random"
+      @product = Product.all.sample
+    else
+      @product = Product.find_by(id: params[:id])
+    end
     render 'show.html.erb'
   end
 
@@ -47,4 +55,9 @@ class ProductsController < ApplicationController
     flash[:success] = "#{@product.name} was successfully deleted!"
     redirect_to "/products"
   end
+
+    def search
+      @products = Product.where("LOWER(name) LIKE ?", "#{params[:search].downcase}")
+      render 'index.html.erb'
+    end
 end

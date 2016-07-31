@@ -1,7 +1,7 @@
 <h1>The Product!</h1>
 
-<h2><%= @product.name %> <%= @product.price %></h2>
-  <h2><img src="<%= @product.image %>"></h2>
+<h2><%= @product.supplier.name %> <%= @product.name %> $<%= @product.total %></h2>
+  <h2><img src="<%= product.images.first.link %>"></h2>
   <h2><%= @product.desc %></h2>
 
 <p><%= link_to "Edit your product", "/products/#{@product.id}/edit" %></p>

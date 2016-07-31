@@ -1,4 +1,6 @@
 <h1>Our Products today:</h1>
+<h3><a href="/products?sort=price&sort_order=asc">Order by lowest to highest price</a></h3>
+<h3><a href="/products?sort=price&sort_order=desc">Order by highest to lowest price</a></h3>
 <div class="container">
   <div class="row products-index">
     <% @products.each do |product| %>
@@ -6,7 +8,7 @@
       <%= link_to product.name, "/products/#{product.id}" %>
       <%= product.sale_message %>
       <%= product.total %>
-      <img src="<%= product.image %>">
+      <img src="<%= product.images.first.link %>">
       <%= product.desc %>
     </div>
     <% end %>
