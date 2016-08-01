@@ -1,0 +1,14 @@
+<h1>Your order has been created!</h1>
+<h2>Here is the summary:</h2>
+<h3>Order ID:<%= @order.id %>
+<br>
+<%= @order.quantity %> orders of <%= @order.product.name %>.
+<br>
+<img src="<%= @order.product.images.first.link %>" alt="<%= @order.product.name %>">
+<br>
+Total Subtotal: <%= @order.order_subtotal %>
+<br>
+Total Tax: <%= @order.order_tax.round(2) %>
+<br>
+Total Price: <%= @order.order_total %>
+</h3>

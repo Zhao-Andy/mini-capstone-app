@@ -1,9 +1,10 @@
 class Product < ActiveRecord::Base
 belongs_to :supplier
 has_many :images
+has_many :orders
 
   def sale_message
-    if price.to_i < 2
+    if price < 2
       @message = "Discount Item!"
     else
       @message = "Not on Sale!"
