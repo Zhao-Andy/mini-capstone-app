@@ -4,17 +4,13 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @product = Product.find_by(id: params[:product_id])
-    @order = Order.new(
-      user_id: current_user.id,
-      quantity: params[:quantity],
-      product_id: params[:product_id],
-      subtotal: (@product.price * params[:quantity].to_i),
-      tax: (@product.tax * params[:quantity].to_i),
-      total: (@product.total * params[:quantity].to_i)
+    cart = current_user.carted_products.where(status: 'Carted')
+    order = Order.create(
+      user_id: current_user.id
     )
-    @order.save
-    flash[:success] = "Success!"
-    redirect_to "/orders/#{@order.id}"
+    cart.update_all(order_id: order.id, status: "Ordered")
+    order.calculate
+    flash[:success] = "Order ##{order.id} has been placed!"
+    redirect_to "/orders/#{order.id}"
   end
 end

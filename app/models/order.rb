@@ -1,16 +1,18 @@
 class Order < ActiveRecord::Base
-  belongs_to :product
+  has_many :carted_products
+  has_many :products, through: :carted_products
   belongs_to :user
 
-  def order_subtotal
-    product.price * quantity
-  end
-
-  def order_tax
-    product.tax * quantity
-  end
-
-  def order_total
-    product.total * quantity
+  def calculate
+    o_subtotal = 0
+    o_tax = 0
+    carted_products.each do |item|
+      o_subtotal += item.quantity * item.product.price
+      o_tax += item.quantity * item.product.tax
+    end
+    self.subtotal = o_subtotal
+    self.tax = o_tax
+    self.total = (o_subtotal + o_tax).round(2)
+    save
   end
 end

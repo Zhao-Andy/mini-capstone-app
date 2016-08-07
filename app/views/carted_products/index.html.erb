@@ -1,0 +1,11 @@
+<h1>Your Current Shopping Cart</h1>
+<% @cart.each do |product| %>
+  <h1><%= product.quantity %> orders of <%= product.product.name %> </h1>
+  <h1><%= product.product.total * product.quantity %></h1>
+  <img src="<%= product.product.images.first.link %>" alt="<%= product.product.name %>">
+  <%= link_to "Remove from cart", "/cart/#{product.id}", method: "delete" class: 'btn btn-danger' %>
+  <br>
+<% end %>
+    <%= form_tag("/orders", method: "post") do %>
+      <%= submit_tag("Buy Now", class: 'btn btn-primary') %>
+    <% end %>

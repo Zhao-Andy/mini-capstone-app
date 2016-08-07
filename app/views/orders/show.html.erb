@@ -2,13 +2,14 @@
 <h2>Here is the summary:</h2>
 <h3>Order ID:<%= @order.id %>
 <br>
-<%= @order.quantity %> orders of <%= @order.product.name %>.
+<% cart = CartedProduct.where(user_id: current_user.id, order_id: @order.id, status: "Ordered") %>
+<% cart.each do |item| %>
+<%= item.product.name %>
+<img src="<%= item.product.images.first.link %>" alt="">
+<% end %>
 <br>
-<img src="<%= @order.product.images.first.link %>" alt="<%= @order.product.name %>">
+Total Subtotal: <%= @order.subtotal %>
 <br>
-Total Subtotal: <%= @order.order_subtotal %>
+Total Tax: <%= @order.tax.round(2) %>
 <br>
-Total Tax: <%= @order.order_tax.round(2) %>
-<br>
-Total Price: <%= @order.order_total %>
-</h3>
+Total Price: <%= @order.total.round(2) %>

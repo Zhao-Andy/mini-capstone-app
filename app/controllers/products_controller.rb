@@ -6,6 +6,10 @@ class ProductsController < ApplicationController
     elsif params[:discount]
       @products = Product.where("price < ?", 2.00)
     end
+    if params[:category]
+      category = Category.find_by(name: params[:category])
+      @products = category.products
+    end
   end
 
   def create
@@ -56,8 +60,8 @@ class ProductsController < ApplicationController
     redirect_to "/products"
   end
 
-    def search
-      @products = Product.where("LOWER(name) LIKE ?", "#{params[:search].downcase}")
-      render 'index.html.erb'
-    end
+  def search
+    @products = Product.where("LOWER(name) LIKE ?", "#{params[:search].downcase}")
+    render 'index.html.erb'
+  end
 end

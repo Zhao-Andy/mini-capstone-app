@@ -3,18 +3,17 @@
 <h2><%= @product.supplier.name %> <%= @product.name %> $<%= @product.total %></h2>
   <h2><img src="<%= @product.images.first.link %>"></h2>
   <h2><%= @product.desc %> </h2>
+  <h2>From the <%= @product.categories.first.name %> department.</h2>
 <div>
-  <% if current_user %>
-    <%= form_tag("/orders", method: "post") do %>
+    <%= form_tag("/carted_products", method: "post") do %>
       <%= label_tag(:name, "Quantity") %>
       <%= text_field_tag(:quantity) %>
       <%= hidden_field_tag(:product_id, @product.id) %>
       <%= hidden_field_tag(:subtotal, @product.price) %>
       <%= hidden_field_tag(:tax, @product.tax) %>
       <%= hidden_field_tag(:total, @product.total) %>
-      <%= submit_tag("Buy Now!") %>
+      <%= submit_tag("Add to Cart") %>
     <% end %>
-  <% end %>
 </div>
 <p><%= link_to "Edit your product", "/products/#{@product.id}/edit" %></p>
 <p><a href="/products">Back to all products</a></p>
