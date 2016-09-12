@@ -5,8 +5,9 @@
   <h2><%= @product.desc %> </h2>
   <h2>From the <%= @product.categories.first.name %> department.</h2>
 <div>
+  <% if current_user && current_user.admin %>
     <%= form_tag("/carted_products", method: "post") do %>
-      <%= label_tag(:name, "Quantity") %>
+      <%= label_tag(:name, "Quantity") %> <h></h>
       <%= text_field_tag(:quantity) %>
       <%= hidden_field_tag(:product_id, @product.id) %>
       <%= hidden_field_tag(:subtotal, @product.price) %>
@@ -14,7 +15,15 @@
       <%= hidden_field_tag(:total, @product.total) %>
       <%= submit_tag("Add to Cart") %>
     <% end %>
+    <% else %>
+    <%= form_tag("/signup", method: "get") do %>
+      <h2>Create an account to buy!</h2>
+      <%= submit_tag("Create an Account", class: 'btn btn-primary') %>
+    <% end %>
+  <% end %>
 </div>
+<% if current_user && current_user.admin %>
 <p><%= link_to "Edit your product", "/products/#{@product.id}/edit" %></p>
 <p><a href="/products">Back to all products</a></p>
 <p></p><%= link_to "Delete", "/products/#{@product.id}", method: :delete %></p>
+<% end %>

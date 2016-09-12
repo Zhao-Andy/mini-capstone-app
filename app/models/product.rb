@@ -6,6 +6,9 @@ class Product < ActiveRecord::Base
   has_many :carted_products
   has_many :orders, through: :carted_products
 
+  validates :name, :price, :desc, presence: true
+  validates :price, numericality: true
+
   def sale_message
     if price < 2
       @message = "Discount Item!"

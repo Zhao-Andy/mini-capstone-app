@@ -22,5 +22,4 @@ Rails.application.routes.draw do
 
   get '/orders/:id' => 'orders#show'
   post '/orders' => 'orders#create'
-
 end

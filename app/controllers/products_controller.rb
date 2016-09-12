@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authorize_user!, except: [:index, :show, :search]
+
   def index
     @products = Product.all
     if params[:sort] && params[:sort_order]
@@ -13,18 +15,23 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(
+    @product = Product.create(
       name: params[:name],
       price: params[:price],
-      image: params[:image],
       desc: params[:desc]
     )
-    @product.save
-    flash[:success] = "#{@product.name} was successfully created!"
-    redirect_to "/products/#{@product.id}"
+    if @product.valid?
+      flash[:success] = "#{@product.name} was successfully created!"
+      redirect_to "/products/#{@product.id}"
+    else
+      flash[:danger] = @product.errors.full_messages
+      render "/products/new"
+    end
   end
 
   def new
+    @product = Product.new
+    render 'new.html.erb'
   end
 
   def show
@@ -46,11 +53,15 @@ class ProductsController < ApplicationController
     @product.update(
       name: params[:name],
       price: params[:price],
-      image: params[:image],
       desc: params[:desc]
     )
-    flash[:success] = "#{@product.name} was successfully updated!"
-    redirect_to "/products/#{@product.id}"
+    if @product.valid?
+      flash[:success] = "#{@product.name} was successfully updated!"
+      redirect_to "/products/#{@product.id}"
+    else
+      flash[:danger] = @product.errors.full_messages
+      render 'edit.html.erb'
+    end
   end
 
   def destroy
@@ -61,7 +72,7 @@ class ProductsController < ApplicationController
   end
 
   def search
-    @products = Product.where("LOWER(name) LIKE ?", "#{params[:search].downcase}")
+    @products = Product.where("LOWER(name) LIKE ?", params[:search].to_s.downcase)
     render 'index.html.erb'
   end
 end

@@ -1,20 +1,9 @@
-<h1>Here's the page to request a new product!</h1>
+<h1>Create a new product here!</h1>
+
 <%= form_tag("/products", method: "post") do %>
-  <%= label_tag(:name, "Name") %>
-  <%= text_field_tag(:name) %>
-  <br>
 
-  <%= label_tag(:price, "Price") %>
-  <%= text_field_tag(:price) %>
-  <br>
-
-  <%= label_tag(:image, "Image Link") %>
-  <%= text_field_tag(:image) %>
-  <br>
-
-  <%= label_tag(:desc, "Description") %>
-  <%= text_field_tag(:desc) %>
-  <br>
+  <%= render 'form' %>
 
   <%= submit_tag("Request") %>
+  
 <% end %>

@@ -28,7 +28,9 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/products">All Products</a></li>
+              <% if current_user && current_user.admin %>
               <li><a href="/products/new">Create A New Product</a></li>
+              <% end %>
               <li><a href="/products?discount=price">Show Discount Items</a></li>
               <li><a href="/products/random">Random Product</a></li>
               <% Category.all.each do |category| %>
@@ -51,7 +53,7 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/cart">Checkout</a></li>
+            <li><a href="/cart">Checkout <%= "#{@cart_count} Items" %></a></li>
             <li><a href="#">Another action</a></li>
             <li><a href="#">Something else here</a></li>
             <li role="separator" class="divider"></li>
@@ -67,7 +69,15 @@
   <div class="alert alert-<%= name %> alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
-  <h5><%= message %></h5>
+    <% if message.is_a?(Array) %>
+    <ul>
+      <% message.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+    <% else %>
+      <h5><%= message %></h5>
+    <% end %>
   </div>
   <% end %>
 

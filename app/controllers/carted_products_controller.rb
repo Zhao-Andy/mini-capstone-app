@@ -1,4 +1,6 @@
 class CartedProductsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @cart = current_user.carted_products.where(status: "Carted")
     redirect_to '/products' if @cart.empty?
@@ -19,6 +21,7 @@ class CartedProductsController < ApplicationController
   def destroy
     cart = CartedProduct.find_by(id: params[:id])
     cart.update(status: 'Removed')
+    session[:cart_count] = nil
     flash[:success] = "#{cart.product.name} was removed!"
     redirect_to "/cart"
   end

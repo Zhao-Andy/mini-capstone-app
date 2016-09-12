@@ -3,6 +3,10 @@ class Order < ActiveRecord::Base
   has_many :products, through: :carted_products
   belongs_to :user
 
+  validates :subtotal, :tax, :total, presence: true
+  validates :subtotal, :tax, :total, numericality: true
+  
+
   def calculate
     o_subtotal = 0
     o_tax = 0
